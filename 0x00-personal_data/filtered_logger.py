@@ -10,8 +10,7 @@ def filter_datum(
 ) -> str:
     """returns the log message obfuscated"""
     for f in fields:
-        message = re.sub(
-            rf"{f}=.*?{separator}", f"{f}={redaction}{separator}", message)
+        message = re.sub(rf"{f}=.*?{separator}", f"{f}={redaction}{separator}", message)
 
     return message
 
@@ -30,7 +29,8 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """filter values in incoming log records"""
-        logging.basicConfig(level=logging.DEBUG, format=record)
-        logger = logging.getLogger()
-        logger.info(record)
-        # filter_datum(self.field)
+        filtred_msg = filter_datum(
+            self.fields, self.REDACTION, record.getMessage(), self.SEPARATOR
+        )
+        record.msg = filtred_msg
+        return super(RedactingFormatter, self).format(record)
