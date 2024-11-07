@@ -48,10 +48,10 @@ PII_FIELDS = [
 
 def get_logger() -> logging.Logger:
     """returns a logging.Logger object."""
-    logging.Logger("user_data")
+    logging.getLogger("user_data")
     logging.setLevel(logging.INFO)
     logging.propagate = False
     h = logging.StreamHandler()
-    h.setFormatter(RedactingFormatter(PII_FIELDS))
+    h.setFormatter(RedactingFormatter(fileds=PII_FIELDS))
     logger.addHandler(h)
     return logger
