@@ -35,3 +35,20 @@ class RedactingFormatter(logging.Formatter):
         )
         record.msg = filtred_msg
         return super(RedactingFormatter, self).format(record)
+
+
+PII_FIELDS = [
+    "name",
+    "email",
+    "password",
+    "last_login",
+    "user_agent",
+]
+
+
+def get_logger() -> logging.Logger:
+    """returns a logging.Logger object."""
+    logging.Logger("user_data")
+    logging.setLevel(logging.INFO)
+    logging.propagate = False
+    h = logging.StreamHandler()
