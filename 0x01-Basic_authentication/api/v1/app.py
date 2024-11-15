@@ -47,11 +47,9 @@ def before_request():
     """filtering of each request."""
     if auth is None:
         return
-    if request.path not in [
-        "/api/v1/status/",
-        "/api/v1/unauthorized/",
-        "/api/v1/forbidden/",
-    ]:
+    if require_auth(
+        request.path, ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
+    ):
         if auth.authorization_header(request) is None:
             abort(401)
         if auth.current_user(request) is None:
