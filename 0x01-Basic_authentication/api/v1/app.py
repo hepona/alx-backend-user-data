@@ -17,7 +17,7 @@ if os.getenv("AUTH_TYPE") == "auth":
     from api.v1.auth.auth import Auth
 
     auth = Auth()
-
+print(auth)
 
 @app.errorhandler(404)
 def not_found(error) -> str:
@@ -36,23 +36,20 @@ def forbidden(error) -> str:
     """forbidden handler"""
     return jsonify({"error": "Forbidden"}), 403
 
+def before_request():
+    """filtering of each request."""
+    if auth:
+        if auth.require_auth(request.path, ["/api/v1/status/",
+                       "/api/v1/unauthorized/", "/api/v1/forbidden/"]):
+            auth_header = auth.authorization_header(request)
+            user = auth.current_user(request)
+            if auth_header is None:
+                abort(401)
+            if user is None:
+                abort(403)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
     app.run(host=host, port=port)
 
-
-def before_request():
-    """filtering of each request."""
-    if auth is None:
-        return
-    if require_auth(
-        request.path, ["/api/v1/status/",
-                       "/api/v1/unauthorized/", "/api/v1/forbidden/"]
-    ):
-        if auth.authorization_header(request) is None:
-            abort(401)
-        if auth.current_user(request) is None:
-            abort(403)
-    return None
