@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" 0. User model"""
+""" SQLAlchemy model named User for a database table named users"""
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
