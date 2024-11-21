@@ -42,8 +42,9 @@ class DB:
         """find user by either email or hashed psw"""
         s = self._session
         try:
-            return s.query(User).filter_by(**kwargs).one()
+            user = s.query(User).filter_by(**kwargs).one()
         except NoResultFound:
             raise NoResultFound("Not found")
         except InvalidRequestError:
             raise InvalidRequestError("Invalid")
+        return user
