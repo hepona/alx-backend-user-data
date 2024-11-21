@@ -36,7 +36,7 @@ class DB:
         s.commit()
         return user
 
-    def find_user_by(self, **kwargs: str) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """find user by either email or hashed psw"""
         s = self._session
         try:
@@ -46,3 +46,6 @@ class DB:
         except InvalidRequestError:
             raise
         return user
+    def update_user(user_id: int, **kwargs) -> None:
+        """update user's info"""
+        user = self.find_user_by(id= user_id)
