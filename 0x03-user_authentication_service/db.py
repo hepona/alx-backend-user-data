@@ -44,7 +44,7 @@ class DB:
         try:
             user = s.query(User).filter_by(**kwargs).one()
         except NoResultFound:
-            raise NoResultFound("Not found")
+            raise
         except InvalidRequestError:
-            raise InvalidRequestError("Invalid")
+            raise
         return user
