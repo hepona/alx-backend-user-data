@@ -36,7 +36,7 @@ class DB:
         s.commit()
         return user
 
-    def find_user_by(self, **kwargs: str) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """find user by either email or hashed psw"""
         s = self._session
         try:
