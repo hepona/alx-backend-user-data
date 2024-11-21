@@ -8,6 +8,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import User
 from user import Base
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -35,3 +37,13 @@ class DB:
         s.add(user)
         s.commit()
         return user
+
+    def find_user_by(self, **kwargs: str) -> User:
+        """find user by either email or hashed psw"""
+        s = self._session
+        try:
+            return s.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound("Not found")
+        except InvalidRequestError:
+            raise InvalidRequestError("Invalid")
