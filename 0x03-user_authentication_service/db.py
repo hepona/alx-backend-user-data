@@ -3,12 +3,12 @@
 """
 
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
-from user import User, Base
-from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.ext.declarative import declarative_base
+from user import Base, User
+from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm import sessionmaker
 
 
 class DB:
@@ -35,7 +35,6 @@ class DB:
         user = User(email=email, hashed_password=hashed_password)
         s.add(user)
         s.commit()
-        s.refresh(user)
         return user
 
     def find_user_by(self, **kwargs) -> User:
@@ -49,7 +48,7 @@ class DB:
         except InvalidRequestError:
             raise
 
-    def update_user(self, user_id: int, **kwargs: str) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """update user's info"""
         user = self.find_user_by(id=user_id)
         for k, v in kwargs.items():
