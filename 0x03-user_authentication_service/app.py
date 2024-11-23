@@ -16,7 +16,7 @@ def home():
 
 
 @app.route("/users", methods=["POST"])
-def users(email, password):
+def users(email, password) -> Response:
     """register user if not exist"""
 
     if AUTH.register_user(email, password):
