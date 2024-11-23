@@ -10,13 +10,13 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
-def home():
+def welcome():
     """return JSON payload"""
-    return jsonify({"message": "Bienvenue"}, 200)
+    return jsonify({"message": "Bienvenue"})
 
 
 @app.route("/users", methods=["POST"])
-def users(email, password) -> Response:
+def users(email, password):
     """register user if not exist"""
 
     if AUTH.register_user(email, password):
