@@ -2,6 +2,7 @@
 """Basic Flask app"""
 from flask import Flask, jsonify
 from auth import Auth
+import requests
 
 
 AUTH = Auth()
@@ -10,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
-def welcome():
+def index():
     """return JSON payload"""
     return jsonify({"message": "Bienvenue"})
 
@@ -22,7 +23,7 @@ def users(email, password):
     if AUTH.register_user(email, password):
         return jsonify({f"email": "{email}", "message": "user created"})
     else:
-        return jsonify({"message": "email already registered"}, 400)
+        return jsonify({"message": "email already registered"})
 
 
 if __name__ == "__main__":
