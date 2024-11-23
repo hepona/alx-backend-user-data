@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET"])
 def home():
     """return JSON payload"""
-    return jsonify({"message": "Bienvenue"})
+    return jsonify({"message": "Bienvenue"}, 200)
 
 
 @app.route("/users", methods=["POST"])
