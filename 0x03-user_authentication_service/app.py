@@ -27,13 +27,13 @@ def users():
         return jsonify({"message": "email already registered"})
 
 
-@app.route("/sessions", methods=["POST"])
+@app.route("/sessions", methods=["POST"], strick_slashes=False)
 def login():
     """user logging"""
     email = request.form["email"]
     password = request.form["password"]
     if AUTH.valid_login(email, password):
-        jso = jsonify({"email": email, "message": "logged in"})
+        jso = jsonify({"email": email, "message": "logged in"}), 200
         resp = make_response(jso)
         resp.set_cookie("session_id", AUTH.create_session(email))
         return resp
