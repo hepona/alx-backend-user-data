@@ -42,13 +42,13 @@ def login():
 
 @app.route("/session", methods=["DELETE"])
 def logout():
-    """user's logout"""
+    """doc doc doc"""
     session_id = request.cookies.get("session_id")
-    user = AUTH.get_user_from_session_id(session_id=session_id)
-    if user:
-        AUTH.destroy_session(user.id)
-        return redirect("/home", 302)
-    abort(403)
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect("/")
 
 
 if __name__ == "__main__":
