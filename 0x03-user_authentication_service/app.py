@@ -22,9 +22,20 @@ def users():
     email = request.form["email"]
     password = request.form["password"]
     if AUTH.register_user(email, password):
-        return jsonify({f"email": "{email}", "message": "user created"})
+        return jsonify({"email": email, "message": "user created"})
     else:
         return jsonify({"message": "email already registered"})
+
+
+@app.route("/sessions", methods=["POST"])
+def login():
+    """user logging"""
+    email = request.form["email"]
+    password = request.form["password"]
+    if AUTH.valid_login(email, password):
+        session_id = AUTH.create_session(email)
+        return jsonify({f"email": email, "message": "logged in"})
+    abort(401)
 
 
 if __name__ == "__main__":
