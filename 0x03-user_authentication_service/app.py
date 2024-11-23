@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Basic Flask app"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from auth import Auth
 import requests
 
@@ -17,9 +17,10 @@ def index():
 
 
 @app.route("/users", methods=["POST"])
-def users(email, password):
+def users():
     """register user if not exist"""
-
+    email = request.form["email"]
+    password = request.form["password"]
     if AUTH.register_user(email, password):
         return jsonify({f"email": "{email}", "message": "user created"})
     else:
