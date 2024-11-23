@@ -39,10 +39,11 @@ def login():
         return resp
     abort(401)
 
-@app.route("/session", methods=['DELETE'])
+
+@app.route("/session", methods=["DELETE"])
 def logout():
     """user's logout"""
-    session_id = request.cookie_get('session_id')
+    session_id = request.cookie_get("session_id")
     user = Auth.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
