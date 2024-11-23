@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Basic Flask app"""
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, abort
 from auth import Auth
 import requests
 
@@ -27,7 +27,7 @@ def users():
         return jsonify({"message": "email already registered"})
 
 
-@app.route("/sessions", methods=["POST"], strick_slashes=False)
+@app.route("/sessions", methods=["POST"])
 def login():
     """user logging"""
     email = request.form["email"]
