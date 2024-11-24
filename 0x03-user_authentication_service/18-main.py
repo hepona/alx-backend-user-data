@@ -3,7 +3,7 @@
 from app import app, AUTH
 
 user = AUTH.register_user("test@test.com", "test")
-
+print(user)
 reset_token = AUTH.get_reset_password_token("test@test.com")
 
 AUTH.update_password(reset_token, "test")
